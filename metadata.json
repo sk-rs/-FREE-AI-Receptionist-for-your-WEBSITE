@@ -1,0 +1,6 @@
+{
+  "name": "AI Receptionist Widget - Open Source Embeddable Agent & Customizer",
+  "description": "YC-ready open-source embeddable AI receptionist widget with real-time customizer, multi-platform embed code generator, Gemini key cycling, and developer documentation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

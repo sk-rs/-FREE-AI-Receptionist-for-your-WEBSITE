@@ -10,21 +10,20 @@ License: MIT
 
 ## Frequently Asked Questions
 
-### Can users embed this without having the full code?
-Yes. A website owner only needs one script tag:
-```html
-<script src="https://your-domain.com/widget.js" data-business="Summit Heating" data-color="#000000" async></script>
-```
-They do not need to download or install the full repository on their website. The standalone `widget.js` script handles rendering the launcher button, the floating chat window, animations, and message bubbles.
+### Does this widget slow down website load times?
+No. `widget.js` is under 14KB minified and has zero external dependencies (no jQuery, React, or large CSS frameworks required on the client site). It loads asynchronously with the `async` attribute, ensuring it never blocks initial DOM parsing, First Contentful Paint (FCP), or page rendering.
 
-### What code do they need from you?
-1. The client script: `public/widget.js` (under 14KB, zero dependencies).
-2. An API endpoint: The widget sends user messages to a backend that holds the Gemini API key. They can either:
-   - Use your hosted API endpoint URL in the `data-api` attribute.
-   - Or self-host the included backend (either the C# ASP.NET Core service in `/backend` or the Node.js server in `server.ts`).
+### How does API key cycling and rate-limit failover work?
+Free-tier Google Gemini API keys can hit HTTP 429 (`RESOURCE_EXHAUSTED`) during concurrent traffic spikes. The included backend services (both Node.js and .NET) feature automatic multi-key round-robin cycling. If a key encounters a rate limit, it is placed on a 90-second cooldown and the request is transparently retried using the next healthy key in your pool.
 
-### How do users change the icon, font, color, and greeting?
-They can customize everything directly in the HTML snippet without modifying any code, or by editing the default values inside `widget.js`. See Section 3 below.
+### How does automatic lead qualification and extraction work?
+As visitors converse with the AI receptionist, the system continuously analyzes message context and applies structured extraction prompts and regex evaluators to identify contact details (name, email, phone number) and urgency indicators. Qualified leads are saved to your database and can be retrieved via the `/api/tenants/{tenantSlug}/conversations` endpoint.
+
+### Is the widget mobile responsive?
+Yes. On desktop displays, the chat window floats unobtrusively in the bottom-right or bottom-left corner of the viewport. On mobile screens (under 640px), the widget adapts into a full-height touch sheet with smooth scrolling and responsive virtual keyboard spacing.
+
+### Can I self-host both the backend and widget assets?
+Yes. Everything in this repository is 100% open-source under the MIT license. You can host `widget.js` on your own CDN (or serve it from static storage like Cloudflare R2, AWS S3, or your web server) and run either the Node.js (`server.ts`) or .NET (`backend/`) backend on any cloud provider or VPS.
 
 ---
 

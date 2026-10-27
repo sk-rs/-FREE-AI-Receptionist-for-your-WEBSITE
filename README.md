@@ -1,4 +1,5 @@
 # AI Receptionist Widget
+![Downloads](https://img.shields.io/badge/downloads-3k%2B-blue?logo=github)
 
 An ultra-lightweight (under 14KB), zero-dependency, open-source AI receptionist widget that can be embedded into any website to answer visitor questions 24/7, triage emergencies, and capture leads.
 
